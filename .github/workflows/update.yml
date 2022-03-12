@@ -1,0 +1,45 @@
+name: Update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Every day at 00:00 UTC
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Current Default Version
+        id: default-version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.inputs.version.default' action.yml
+
+      - name: Get Latest Version
+        id: latest-version
+        uses: n0d35/latest-version-action@v1
+        with:
+          repository: GoogleCloudPlatform/docker-credential-gcr
+
+      - name: Update Default Version
+        if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.inputs.version.default = strenv(VERSION)' action.yml
+        env:
+          VERSION: ${{ steps.latest-version.outputs.version }}
+
+      - name: Auto Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
+        with:
+          commit_message: Update to v${{ steps.latest-version.outputs.version }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
+        with: 
+          name: v${{ steps.latest-version.outputs.version }}
+          tag_name: v${{ steps.latest-version.outputs.version }}
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
