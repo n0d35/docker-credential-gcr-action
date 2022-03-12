@@ -1,15 +1,34 @@
-name: Hello
-description: Say hello
+name: Docker Credential GCR Action
+description: Configures Docker to authenticate to Google Container Registry
 branding:
-  icon: activity
-  color: blue
+  icon: unlock
+  color: green
 inputs:
-  foo:
-    description: Foo
+  service-account-key:
+    description: Service Account Key
     required: true
+  version:
+    description: Version
+    required: false
+    default: ''
 runs:
   using: composite
   steps:
     - shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
       run: |
-        echo 'Hello, World!'
+        # Install
+        URL=$(echo "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v$VERSION/docker-credential-gcr_linux_amd64-$VERSION.tar.gz")
+        curl -fsSL "$URL" \
+        | tar xz --to-stdout docker-credential-gcr \
+        | sudo tee /usr/local/bin/docker-credential-gcr > /dev/null
+        sudo chmod +x /usr/local/bin/docker-credential-gcr
+
+        # Configure
+        docker-credential-gcr configure-docker
+
+    - name: Set Up GCP Credentials
+      uses: n0d35/google-credentials-action@v1
+      with:
+        service-account-key: ${{ inputs.service-account-key }}
