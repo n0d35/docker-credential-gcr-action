@@ -18,7 +18,7 @@ jobs:
 
       - name: Get Latest Version
         id: latest-version
-        uses: n0d35/latest-version-action@v1
+        uses: nodes-app/latest-version-action@v1
         with:
           repository: GoogleCloudPlatform/docker-credential-gcr
 
