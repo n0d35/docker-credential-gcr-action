@@ -10,7 +10,7 @@ inputs:
   version:
     description: Version
     required: false
-    default: ''
+    default: '2.1.0'
 runs:
   using: composite
   steps:
@@ -27,7 +27,6 @@ runs:
 
         # Configure
         docker-credential-gcr configure-docker
-
     - name: Set Up GCP Credentials
       uses: n0d35/google-credentials-action@v1
       with:
