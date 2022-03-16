@@ -20,7 +20,7 @@ jobs:
         id: latest-version
         uses: nodes-app/latest-version-action@v1
         with:
-          project: GoogleCloudPlatform/docker-credential-gcr
+          repository: GoogleCloudPlatform/docker-credential-gcr
 
       - name: Update Default Version
         if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
