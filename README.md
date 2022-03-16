@@ -1,6 +1,6 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/nodes-app/docker-credential-gcr-action)
 
-# Docker Credential GCR Action
+# docker-credential-gcr-action
 
 Action for configuring Docker to authenticate to Google Container Registry using [the official docker-credential-gcr credential helper](https://github.com/GoogleCloudPlatform/docker-credential-gcr).
 
