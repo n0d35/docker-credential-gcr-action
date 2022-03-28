@@ -28,6 +28,6 @@ runs:
         # Configure
         docker-credential-gcr configure-docker
     - name: Set Up GCP Credentials
-      uses: n0d35/google-credentials-action@v1
+      uses: n0d35/action-google-credentials@v1
       with:
         service-account-key: ${{ inputs.service-account-key }}
