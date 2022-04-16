@@ -10,7 +10,7 @@ inputs:
   version:
     description: Version
     required: false
-    default: '2.1.0'
+    default: '2.1.1'
 runs:
   using: composite
   steps:
