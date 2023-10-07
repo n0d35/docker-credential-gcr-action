@@ -31,7 +31,7 @@ jobs:
           VERSION: ${{ steps.latest-version.outputs.version }}
 
       - name: Auto Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
         with:
           commit_message: Update to v${{ steps.latest-version.outputs.version }}
