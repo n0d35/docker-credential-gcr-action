@@ -37,7 +37,7 @@ jobs:
           commit_message: Update to v${{ steps.latest-version.outputs.version }}
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: ${{ steps.default-version.outputs.result != steps.latest-version.outputs.version }}
         with: 
           name: v${{ steps.latest-version.outputs.version }}
